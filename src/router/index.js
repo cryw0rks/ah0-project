@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import * as auth from "../auth";
 import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
 
 Vue.use(VueRouter);
 
@@ -8,55 +10,80 @@ const routes = [
   {
     path: "/",
     name: "Home",
+    meta: {
+    loginRequired: false,
+    hideOnLogin: false,
+    },
     component: Home
   },
   {
     path: "/user",
     name: "User",
+    meta: {
+    loginRequired: false,
+    hideOnLogin: false,
+    },
     component: () =>
       import("../views/User.vue")
   },
   {
     path: "/kami",
     name: "Kami",
+    meta: {
+    loginRequired: false,
+    hideOnLogin: false,
+    },
     component: () =>
       import("../views/Kami.vue")
   },
   {
     path: "/setting",
     name: "Setting",
+    meta: {
+    loginRequired: true,
+    hideOnLogin: false,
+    },
     component: () =>
       import("../views/Setting.vue")
   },
   {
     path: "/login",
     name: "Login",
-    component: () =>
-      import("../views/Login.vue")
+    meta: {
+    loginRequired: false,
+    hideOnLogin: true,
+    },
+    component: Login
   },
   {
     path: "/register",
     name: "Register",
+    meta: {
+    loginRequired: false,
+    hideOnLogin: true,
+    },
     component: () =>
       import("../views/Register.vue")
   },
   {
     path: "/feedback",
     name: "Feedback",
+    meta: {
+    loginRequired: false,
+    hideOnLogin: false,
+    },
     component: () =>
       import("../views/Feedback.vue")
   },
   {
     path: "/reportbug",
     name: "Report Bug",
+    meta: {
+      loginRequired: false,
+      hideOnLogin: false,
+    },
     component: () =>
       import("../views/ReportBug.vue")
-  },
-  {
-    path: "/logout",
-    name: "Logout",
-    component: () =>
-      import("../views/Logout.vue")
   }
 ];
 
@@ -66,4 +93,19 @@ const router = new VueRouter({
   routes
 });
 
-export default router;
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+
+  if (auth.isLogin()) {
+    if (to.meta.hideOnLogin) {
+      return next('/');
+    }
+  } else {
+    if (to.meta.loginRequired) {
+      return next('/login');
+    }
+  }
+  next();
+})
+
+export default router

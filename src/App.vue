@@ -12,10 +12,10 @@
                     <li><router-link to="/">home</router-link></li>
                     <li><router-link to="/user">user</router-link></li>
                     <li><router-link to="/kami">kami</router-link></li>
-                    <li><router-link to="/setting">setting</router-link></li>
-                    <li><router-link to="/logout">logout</router-link></li>
-                    <li><router-link to="/login">login</router-link></li>
-                    <li><router-link to="/register">register</router-link></li>
+                    <li v-if="isLogin()"><router-link to="/setting">setting</router-link></li>
+                    <li v-if="isLogin()"><a @click="handleLogout">logout</a></li>
+                    <li v-if="!isLogin()"><router-link to="/login">login</router-link></li>
+                    <li v-if="!isLogin()"><router-link to="/register">register</router-link></li>
                 </ul>
             </header>
 
@@ -41,6 +41,57 @@
                     <span>copyright &copy; 2019 ba-ka all right reserved</span>
                 </div>
             </footer>
-   
+            <Modal ref="modalok"></Modal>
   </div>
+  
 </template>
+
+<script>
+    import Modal from './modal'
+    export default {
+        data(){
+            return {
+            }
+        },
+
+        components: { Modal },
+
+        methods : {
+            isLogin() {
+                return this.$auth.isLogin();
+            },
+            handleLogout(e){
+                e.preventDefault()
+                this.$refs.modalok.show('loading')
+                this.$auth.logout().then(response=>{
+                    if (response.error) {
+                    this.$refs.modalok.show('dialog', 
+                    {
+                        title: "info",
+                        content: response.message,
+                        buttons: [ 
+                        { 
+                            title: "close"
+                        } ]
+                    })
+                } else {
+                    this.$refs.modalok.show('dialog', 
+                    {
+                        title: "info",
+                        content: response.message,
+                        buttons: [ 
+                        { 
+                            title: "close", 
+                            handler: () => {
+                                this.$router.go(this.$router.currentRoute)
+                            }
+                        } ]
+                    })
+                    }
+                }).catch(function (error) {
+                    console.error(error.response);
+                });
+            }
+        }
+    }
+</script>
