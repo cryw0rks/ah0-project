@@ -32,7 +32,7 @@ export function getOneUser(username) {
       message: "something wrong",
       error: true
     };
-    Axios.get(urlAPI+"http://localhost:2000/user?username=" + username)
+    Axios.get(urlAPI+"user?username=" + username)
       .then(response => {
         if (response.data.error == false) {
           retu["message"] = "load success";
