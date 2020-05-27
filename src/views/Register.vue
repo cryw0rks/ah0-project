@@ -1,16 +1,14 @@
 <template>
   <div class="user">
     <h1>register</h1>
-    <label>username</label>
-    <input required id="username" v-model="username" type="text" placeholder="Kirito"><br>
-    <label>e-mail</label>
-    <input required id="email" v-model="email" type="text" placeholder="kirito@sao.com"><br>
-    <label>password</label>
-    <input required id="password" v-model="password" type="password" placeholder="Password"><br>
-    <label>retype-password</label>
-    <input required id="password2" v-model="password2" type="password" placeholder="Retype-Password">
-    <br>
-    <button type="submit" @click="handleSubmit">login</button>
+    <table>
+        <tr><td><label>username</label></td><td>:</td><td><input style="width: 200px;" required id="username" v-model="username" type="text" placeholder="Kirito"></td></tr>
+        <tr><td><label>e-mail</label></td><td>:</td><td><input style="width: 200px;" required id="email" v-model="email" type="text" placeholder="kirito@sao.com"></td></tr>
+        <tr><td><label>password</label></td><td>:</td><td><input style="width: 200px;" required id="password" v-model="password" type="password" placeholder="Password"></td></tr>
+        <tr><td><label>retype-password</label></td><td>:</td><td><input style="width: 200px;" required id="password2" v-model="password2" type="password" placeholder="Retype-Password"></td></tr>
+        <tr><td colspan="3">already have acc? <router-link to="/login">login now</router-link> <button style="float: right;" type="submit" @click="handleSubmit">register</button></td></tr>
+    </table>
+    
    <Modal ref="modalok"></Modal>
   </div>
 </template>

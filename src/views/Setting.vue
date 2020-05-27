@@ -2,32 +2,32 @@
   <div class="user">
     <h1>setting - info</h1>
     <label>username</label>
-    <input required id="username" v-model="user_username" type="text" placeholder="Kirito"><br>
+    <input id="username" v-model="user_username" type="text" placeholder="Kirito"><br>
     <label>e-mail</label>
-    <input required id="email" v-model="user_email" type="text" placeholder="kirito@sao.com"><br>
+    <input id="email" v-model="user_email" type="text" placeholder="kirito@sao.com"><br>
     <label>nickname</label>
-    <input required id="nickname" v-model="user_nickname" type="text" placeholder="nickname"><br>
+    <input id="nickname" v-model="user_nickname" type="text" placeholder="nickname"><br>
     <label>about</label>
-    <textarea required v-model="user_about" placeholder="about uuu"></textarea>
+    <textarea v-model="user_about" placeholder="about uuu"></textarea>
     <br>
     <button type="submit" @click="handleSubmit">update info</button>
     <br>
     <br>
     <h1>setting - password</h1>
     <label>old password</label>
-    <input required id="password_ori" v-model="password_ori" type="password" placeholder="old password"><br>
+    <input id="password_ori" v-model="password_ori" type="password" placeholder="old password"><br>
     <label>new password</label>
-    <input required id="password_new" v-model="password_new" type="password" placeholder="new password"><br>
+    <input id="password_new" v-model="password_new" type="password" placeholder="new password"><br>
     <label>retype new password</label>
-    <input required id="password_new_retype" v-model="password_new_retype" type="password" placeholder="retype new password">
+    <input id="password_new_retype" v-model="password_new_retype" type="password" placeholder="retype new password">
     <br>
-    <button type="submit" @click="handleSubmitPW">update password</button>
+    <button type="submit" :disabled="!validDataPW" @click="handleSubmitPW">update password</button>
     <br>
     <br>
     <h1>setting - image profile</h1>
-    <img width="100px" height="100px" v-bind:src="user_image_profile">
+    <div class="center-cropped"><img v-bind:src="user_image_profile"></div>
     <br>
-    <input required type="file" ref="image_profile_file" @change="selectFile"><br>
+    <input type="file" ref="image_profile_file" @change="selectFile"><br>
     <button type="submit" :disabled="!image_profile_file" @click="handleSubmitImageProfile">update image profile</button>
     <Modal ref="modalok"></Modal>
   </div>
@@ -43,7 +43,7 @@ export default {
   		user_username: 'error',
   		user_email: 'error',
   		user_about: 'error',
-  		user_image_profile: 'error',
+  		user_image_profile: '/asset/img/profile.jpg',
   		user_image_banner: 'error',
   		password_ori: null,
   		password_new: null,
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
   	renderData(lol) {
-  		console.log(lol);
+  		//console.log(lol);
 		this.user_nickname = lol['data_auth']['data_user']['nickname']
 		this.user_username = lol['data_auth']['data_user']['username']
 		this.user_email = lol['data_auth']['data_user']['email']
@@ -122,11 +122,17 @@ export default {
                 	})
                 	if (response.error == false) {
                 		this.user_image_profile = response.data_image['url']
+                		this.$refs.image_profile_file.value = null;
                 	}
                 }).catch(function (error) {
                     console.error(error.response);
                 });
             }
+  },
+  computed: {
+  	validDataPW: function() {
+  		return this.password_ori && this.password_new && this.password_new_retype && (this.password_new == this.password_new_retype)
+  	}
   },
   async mounted() {
   	const data_userx = await this.$auth.getInfoAuth(this.$auth.getAuthText())

@@ -1,12 +1,11 @@
 <template>
   <div class="user">
     <h1>login</h1>
-    <label>username/e-mail</label>
-    <input required id="username" v-model="username" type="text" placeholder="Kirito"><br>
-    <label>password</label>
-    <input required id="password" v-model="password" type="password" placeholder="Password">
-    <br>
-    <button type="submit" @click="handleSubmit">login</button>
+    <table>
+        <tr><td><label>username/e-mail</label></td><td>:</td><td><input style="width: 200px;" required id="username" v-model="username" type="text" placeholder="Kirito"></td></tr>
+        <tr><td><label>password</label></td><td>:</td><td><input style="width: 200px;" required id="password" v-model="password" type="password" placeholder="Password"></td></tr>
+        <tr><td colspan="3">don't have acc? <router-link to="/register">register now</router-link> <button style="float: right;" type="submit" @click="handleSubmit">login</button></td></tr>
+    </table>
    <Modal ref="modalok"></Modal>
   </div>
 </template>
@@ -48,7 +47,7 @@
                 		{ 
                 			title: "close", 
                 			handler: () => {
-                				this.$router.push("/")
+                				this.$router.go("/")
                 			}
                 		} ]
                 	})

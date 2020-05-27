@@ -41,7 +41,7 @@
         this.modalTitle = "loading"
       this.modalContent = "please wait...."
       } else if (type == "dialog") {
-      console.log(config);
+      //console.log(config);
       this.modalTitle = config.title
       this.modalContent = config.content
       this.buttons = config.buttons

@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <Announcement msg="Announcement" />
-    DSssx
+    <Announcement msg="home" />
   </div>
 </template>
 

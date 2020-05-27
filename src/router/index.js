@@ -27,6 +27,26 @@ const routes = [
       import("../views/User.vue")
   },
   {
+    path: "/user/:userId",
+    name: "User Profile",
+    meta: {
+    loginRequired: false,
+    hideOnLogin: false,
+    },
+    component: () =>
+      import("../views/UserProfile.vue")
+  },
+  {
+    path: "/discord",
+    name: "Discord",
+    meta: {
+    loginRequired: false,
+    hideOnLogin: false,
+    },
+    component: () =>
+      import("../views/Discord.vue")
+  },
+  {
     path: "/kami",
     name: "Kami",
     meta: {
@@ -93,10 +113,11 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-
-  if (auth.isLogin()) {
+  const lol = await auth.isLogin();
+  //console.log('log', lol)
+  if (lol['isLogin']) {
     if (to.meta.hideOnLogin) {
       return next('/');
     }
