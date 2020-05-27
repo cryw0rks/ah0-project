@@ -11,8 +11,8 @@ const routes = [
     path: "/",
     name: "Home",
     meta: {
-    loginRequired: false,
-    hideOnLogin: false,
+      loginRequired: false,
+      hideOnLogin: false
     },
     component: Home
   },
@@ -20,58 +20,53 @@ const routes = [
     path: "/user",
     name: "User",
     meta: {
-    loginRequired: false,
-    hideOnLogin: false,
+      loginRequired: false,
+      hideOnLogin: false
     },
-    component: () =>
-      import("../views/User.vue")
+    component: () => import("../views/User.vue")
   },
   {
     path: "/user/:userId",
     name: "User Profile",
     meta: {
-    loginRequired: false,
-    hideOnLogin: false,
+      loginRequired: false,
+      hideOnLogin: false
     },
-    component: () =>
-      import("../views/UserProfile.vue")
+    component: () => import("../views/UserProfile.vue")
   },
   {
     path: "/discord",
     name: "Discord",
     meta: {
-    loginRequired: false,
-    hideOnLogin: false,
+      loginRequired: false,
+      hideOnLogin: false
     },
-    component: () =>
-      import("../views/Discord.vue")
+    component: () => import("../views/Discord.vue")
   },
   {
     path: "/kami",
     name: "Kami",
     meta: {
-    loginRequired: false,
-    hideOnLogin: false,
+      loginRequired: false,
+      hideOnLogin: false
     },
-    component: () =>
-      import("../views/Kami.vue")
+    component: () => import("../views/Kami.vue")
   },
   {
     path: "/setting",
     name: "Setting",
     meta: {
-    loginRequired: true,
-    hideOnLogin: false,
+      loginRequired: true,
+      hideOnLogin: false
     },
-    component: () =>
-      import("../views/Setting.vue")
+    component: () => import("../views/Setting.vue")
   },
   {
     path: "/login",
     name: "Login",
     meta: {
-    loginRequired: false,
-    hideOnLogin: true,
+      loginRequired: false,
+      hideOnLogin: true
     },
     component: Login
   },
@@ -79,31 +74,28 @@ const routes = [
     path: "/register",
     name: "Register",
     meta: {
-    loginRequired: false,
-    hideOnLogin: true,
+      loginRequired: false,
+      hideOnLogin: true
     },
-    component: () =>
-      import("../views/Register.vue")
+    component: () => import("../views/Register.vue")
   },
   {
     path: "/feedback",
     name: "Feedback",
     meta: {
-    loginRequired: false,
-    hideOnLogin: false,
+      loginRequired: false,
+      hideOnLogin: false
     },
-    component: () =>
-      import("../views/Feedback.vue")
+    component: () => import("../views/Feedback.vue")
   },
   {
     path: "/reportbug",
     name: "Report Bug",
     meta: {
       loginRequired: false,
-      hideOnLogin: false,
+      hideOnLogin: false
     },
-    component: () =>
-      import("../views/ReportBug.vue")
+    component: () => import("../views/ReportBug.vue")
   }
 ];
 
@@ -117,16 +109,16 @@ router.beforeEach(async (to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
   const lol = await auth.isLogin();
   //console.log('log', lol)
-  if (lol['isLogin']) {
+  if (lol["isLogin"]) {
     if (to.meta.hideOnLogin) {
-      return next('/');
+      return next("/");
     }
   } else {
     if (to.meta.loginRequired) {
-      return next('/login');
+      return next("/login");
     }
   }
   next();
-})
+});
 
-export default router
+export default router;
