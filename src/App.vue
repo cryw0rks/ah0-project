@@ -48,8 +48,8 @@
     <footer>
       <div class="footer-top">
         <ul class="footer-select-lang">
-          <li><router-link to="/feedback">feedback</router-link> |</li>
-          <li><router-link to="/reportbug">report bug</router-link> |</li>
+          <li><router-link to="/feedback">feedback</router-link> | </li>
+          <li><router-link to="/reportbug">report bug</router-link> | </li>
           <li><router-link to="/discord">discord club</router-link></li>
         </ul>
       </div>
