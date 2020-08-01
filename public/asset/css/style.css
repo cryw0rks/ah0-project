@@ -356,3 +356,16 @@ footer .footer-bottom {
   font-size: 14px;
   font-weight: 400;
 }
+
+.fit-form {
+  width: 100%;
+}
+.fit-form input[type="text"], .fit-form select, textarea {
+  width: 100%;
+}
+
+.fit-form textarea {
+  min-width: 100%;
+  max-width:fit-content;
+  min-height: 120px;
+}

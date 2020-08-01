@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-var urlAPI = "https://c0re.ba-ka.org/";
+var urlAPI = "http://localhost:2000/";
 
 export function getAllUsers() {
   return new Promise((resolve, reject) => {

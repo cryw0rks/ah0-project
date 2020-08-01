@@ -34,6 +34,7 @@
           >
         </h4>
         <ul class="content-right-menu">
+          <li v-if="isLogin"><router-link to="/content">content</router-link></li>
           <li v-if="isLogin">
             <router-link to="/setting">setting</router-link>
           </li>

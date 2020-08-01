@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-var urlAPI = "https://c0re.ba-ka.org/";
+var urlAPI = "http://localhost:2000/";
 
 export function login(username, password) {
   return new Promise((resolve, reject) => {
@@ -48,6 +48,36 @@ export function register(username, email, password, password2) {
         if (response.data.error == false) {
           retu["message"] = "register success, you can login now!";
           retu["error"] = false;
+        } else {
+          retu["message"] = response.data.message;
+        }
+        resolve(retu);
+        reject("fail");
+      })
+      .catch(function(error) {
+        console.error(error.response);
+      });
+  });
+}
+
+export function createkami(title, description, status, contentya) {
+  return new Promise((resolve, reject) => {
+    var retu = {
+      message: "something wrong",
+      error: true
+    };
+    Axios.post(urlAPI + "content/kami/create", {
+      title: title,
+      description: description,
+      status: status,
+      contentya: contentya,
+      auth: getAuthTextLocal()
+    })
+      .then(response => {
+        if (response.data.error == false) {
+          retu["message"] = "register success, you can login now!";
+          retu["error"] = false;
+          retu["codeurl"] = "/content/"+response.data.codeurl;
         } else {
           retu["message"] = response.data.message;
         }

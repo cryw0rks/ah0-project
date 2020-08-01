@@ -3,7 +3,7 @@
     <h1>{{ this.nickname }}'s profile</h1>
     <div class="center-cropped"><img v-bind:src="this.image_profile" /></div>
     <h4>@{{ this.username }}</h4>
-    <p>{{ this.about }}</p>
+    <div v-html="compiledMarkdown"></div>
   </div> </template
 >s
 
@@ -19,6 +19,11 @@ export default {
       image_banner: null
     };
   },
+  computed: {
+        compiledMarkdown: function() {
+            return this.$marked(this.about, { sanitize: true });
+          }
+    },
   methods: {
     show(type, config) {
       //this.showModal = false

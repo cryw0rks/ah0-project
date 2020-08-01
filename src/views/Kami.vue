@@ -1,10 +1,6 @@
 <template>
   <div class="user">
-    <h1>kami is on build!</h1>
-    <p>
-      kami is web app where you can write, make a note, create light novel and
-      more... about text
-    </p>
-    <p>contact: <a href="https://t.me/datoyacx">telegram</a></p>
+    <h1>kami</h1>
+    <p>list of public kami, hey create ur own kami <router-link to="/kami/create">here</router-link></p>
   </div>
 </template>
