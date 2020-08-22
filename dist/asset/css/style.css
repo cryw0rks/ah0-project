@@ -10,7 +10,7 @@ body {
 	font-family: "IBM Plex Mono", monospace;
 }
 
-ul, li {
+header ul, header li, footer ul, footer li, .content-right-menu, .content-right-menu li {
 	padding: 0;
 	margin: 0;
 	list-style: none;
@@ -355,4 +355,49 @@ footer .footer-bottom {
   margin: 0;
   font-size: 14px;
   font-weight: 400;
+}
+
+.fit-form {
+  width: 100%;
+}
+.fit-form input[type="text"], .fit-form select, textarea {
+  width: 100%;
+}
+
+.fit-form textarea {
+  min-width: 100%;
+  max-width:fit-content;
+  min-height: 120px;
+  height: 100px;
+  tab-size: 4;
+}
+
+.kami-list {
+    max-width: 100%;
+    column-gap: 10px;
+    column-count: 1;
+}
+.kami-list .kami-one h1, .kami-list .kami-one p {
+    padding: 0;
+    margin: 0;
+}
+.kami-list .kami-one h1 {
+    font-size: 24px;
+}
+
+.kami-list .kami-one p {
+    font-weight: 400;
+}
+
+.kami-list .kami-one {
+    background: #222222;
+    color: #ffffff;
+    padding: 5px 10px;
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.kami-list .kami-one:hover {
+    text-decoration: none;
 }

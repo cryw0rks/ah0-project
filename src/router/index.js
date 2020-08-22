@@ -44,6 +44,15 @@ const routes = [
     component: () => import("../views/ContentShow.vue")
   },
   {
+    path: "/content/:codeURL/edit",
+    name: "Content Edit",
+    meta: {
+      loginRequired: false,
+      hideOnLogin: false
+    },
+    component: () => import("../views/ContentEdit.vue")
+  },
+  {
     path: "/discord",
     name: "Discord",
     meta: {
