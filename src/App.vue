@@ -32,7 +32,7 @@
         </ul>
       </div>
       <div class="footer-bottom">
-        <span>copyright &copy; 2019 ba-ka all right reserved</span>
+        <span>copyright &copy; {{currentYear}} ba-ka all right reserved</span>
       </div>
     </footer>
     <Modal ref="modalok"></Modal>
@@ -46,7 +46,8 @@ import Profile from "./components/Profile.vue";
 export default {
   data() {
     return {
-      today_datez: "japan, tokyo 12/12/1212, 12:12:12 am"
+      today_datez: "japan, tokyo 12/12/1212, 12:12:12 am",
+      currentYear: ""
     };
   },
 
@@ -65,6 +66,7 @@ export default {
       var currentDate = this.$moment(new Date());
       this.today_datez =
         "japan, tokyo " + currentDate.format("D/M/YYYY, h:mm:ss a");
+      this.currentYear = currentDate.format("YYYY");      
     },
   }
 };
