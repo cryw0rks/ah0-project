@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-var urlAPI = "http://localhost:2000/";
+var urlAPI = "https://c0re.ba-ka.org/";
 
 export function login(username, password) {
   return new Promise((resolve, reject) => {
@@ -47,6 +47,66 @@ export function register(username, email, password, password2) {
       .then(response => {
         if (response.data.error == false) {
           retu["message"] = "register success, you can login now!";
+          retu["error"] = false;
+        } else {
+          retu["message"] = response.data.message;
+        }
+        resolve(retu);
+        reject("fail");
+      })
+      .catch(function(error) {
+        console.error(error.response);
+      });
+  });
+}
+
+export function createkami(title, description, status, contentya) {
+  return new Promise((resolve, reject) => {
+    var retu = {
+      message: "something wrong",
+      error: true
+    };
+    Axios.post(urlAPI + "content/kami/create", {
+      title: title,
+      description: description,
+      status: status,
+      contentya: contentya,
+      auth: getAuthTextLocal()
+    })
+      .then(response => {
+        if (response.data.error == false) {
+          retu["message"] = response.data.message;
+          retu["error"] = false;
+          retu["codeurl"] = "/content/"+response.data.codeurl;
+        } else {
+          retu["message"] = response.data.message;
+        }
+        resolve(retu);
+        reject("fail");
+      })
+      .catch(function(error) {
+        console.error(error.response);
+      });
+  });
+}
+
+export function updatekami(title, description, status, contentya, codeurl) {
+  return new Promise((resolve, reject) => {
+    var retu = {
+      message: "something wrong",
+      error: true
+    };
+    Axios.post(urlAPI + "content/kami/update", {
+      title: title,
+      description: description,
+      status: status,
+      contentya: contentya,
+      code: codeurl,
+      auth: getAuthTextLocal()
+    })
+      .then(response => {
+        if (response.data.error == false) {
+          retu["message"] = response.data.message;
           retu["error"] = false;
         } else {
           retu["message"] = response.data.message;

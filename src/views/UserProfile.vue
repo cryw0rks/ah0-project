@@ -3,9 +3,17 @@
     <h1>{{ this.nickname }}'s profile</h1>
     <div class="center-cropped"><img v-bind:src="this.image_profile" /></div>
     <h4>@{{ this.username }}</h4>
-    <p>{{ this.about }}</p>
-  </div> </template
->s
+    <div v-html="compiledMarkdown"></div>
+    <h4>kami</h4>
+    <div class="kami-list" v-if="users">
+      <router-link
+        v-for="(yox, index) in users" class="kami-one" :key="index" :to="{ path: 'content', name: 'Content Show', params: { codeURL: yox.contentcode_url } }" @click.stop="click(index, $event)">
+        <h1>{{ yox.contenttitle }}</h1>
+        <p>by {{ yox.usernickname }}</p>
+        <p>{{ yox.contentdescription }}</p>
+      </router-link>
+    </div>
+  </div> </template>
 
 <script>
 export default {
@@ -16,9 +24,15 @@ export default {
       nickname: null,
       about: null,
       image_profile: null,
-      image_banner: null
+      image_banner: null,
+      users: {}
     };
   },
+  computed: {
+        compiledMarkdown: function() {
+            return this.$marked(this.about, { sanitize: true });
+          }
+    },
   methods: {
     show(type, config) {
       //this.showModal = false
@@ -53,6 +67,11 @@ export default {
     this.about = dataUser["data"]["about"];
     this.image_profile = dataUser["data"]["image_profile"];
     this.image_banner = dataUser["data"]["image_banner"];
+    if (dataUser) {
+    const dataUserz = await this.$dataContent.getAllContents(dataUser["data"]["id"]);
+    //console.log(await this.$dataUser.getAllUsers())
+    this.users = dataUserz["data"]["rows"];
+    }
   }
 };
 </script>

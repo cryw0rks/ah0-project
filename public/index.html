@@ -13,5 +13,16 @@
     </noscript>
     <div id="app">
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(document).keydown(function (e) 
+      {
+          var keycode1 = (e.keyCode ? e.keyCode : e.which);
+          if (keycode1 == 0 || keycode1 == 9) {
+              e.preventDefault();
+              e.stopPropagation();
+          }
+      });
+    </script>
   </body>
 </html>

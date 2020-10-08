@@ -35,6 +35,24 @@ const routes = [
     component: () => import("../views/UserProfile.vue")
   },
   {
+    path: "/content/:codeURL",
+    name: "Content Show",
+    meta: {
+      loginRequired: false,
+      hideOnLogin: false
+    },
+    component: () => import("../views/ContentShow.vue")
+  },
+  {
+    path: "/content/:codeURL/edit",
+    name: "Content Edit",
+    meta: {
+      loginRequired: false,
+      hideOnLogin: false
+    },
+    component: () => import("../views/ContentEdit.vue")
+  },
+  {
     path: "/discord",
     name: "Discord",
     meta: {
@@ -51,6 +69,33 @@ const routes = [
       hideOnLogin: false
     },
     component: () => import("../views/Kami.vue")
+  },
+  {
+    path: "/content",
+    name: "Content Manage",
+    meta: {
+      loginRequired: true,
+      hideOnLogin: false
+    },
+    component: () => import("../views/Content.vue")
+  },
+  {
+    path: "/kami/manage",
+    name: "Kami Manage",
+    meta: {
+      loginRequired: true,
+      hideOnLogin: false
+    },
+    component: () => import("../views/KamiManage.vue")
+  },
+  {
+    path: "/kami/create",
+    name: "Kami Create",
+    meta: {
+      loginRequired: true,
+      hideOnLogin: false
+    },
+    component: () => import("../views/KamiCreate.vue")
   },
   {
     path: "/setting",
