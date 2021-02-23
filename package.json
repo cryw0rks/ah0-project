@@ -14,7 +14,7 @@
     "express": "^4.17.1",
     "git": "^0.1.5",
     "loadash": "^1.0.0",
-    "marked": "^1.2.0",
+    "marked": "^2.0.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.31",
     "vue": "^2.6.12",
