@@ -4,22 +4,22 @@
     <div class="center-cropped"><img v-bind:src="this.image_profile" /></div>
     <h4>@{{ this.username }}</h4>
     <div v-html="compiledMarkdown"></div>
-    <h4>kami</h4>
-    <div class="kami-list" v-if="users">
+    <div class="kami-list" v-if="users.length > 0">
+      <h4>kami</h4>
       <router-link
-        v-for="(yox, index) in users"
+        v-for="(value, index) in users"
         class="kami-one"
         :key="index"
         :to="{
           path: 'content',
           name: 'Content Show',
-          params: { codeURL: yox.contentcode_url },
+          params: { codeURL: value.content.code },
         }"
         @click.stop="click(index, $event)"
       >
-        <h1>{{ yox.contenttitle }}</h1>
-        <p>by {{ yox.usernickname }}</p>
-        <p>{{ yox.contentdescription }}</p>
+        <h1>{{ value.content.title }}</h1>
+        <p>by {{ value.user.nickname }}</p>
+        <p>{{ value.content.description }}</p>
       </router-link>
     </div>
   </div>
@@ -53,8 +53,8 @@ export default {
     this.image_profile = res["result"]["image_profile"];
     this.image_banner = res["result"]["image_banner"];
     
-	const resKami = await this.$dataContent.getAllContents(res["result"]["id"]);
-    this.users = resKami["data"]["rows"];
+	  const resKami = await this.$c0re.getFunction('content').getAllContentByUserID(res["result"]["id"], -1);
+    this.users = resKami["result"]["rows"];
   },
 };
 </script>
