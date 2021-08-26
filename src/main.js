@@ -3,6 +3,7 @@ import App from "./App.vue";
 import * as auth from "./auth";
 import * as dataUser from "./data/user";
 import * as dataContent from "./data/content";
+import * as c0re from "./c0re";
 import router from "./router";
 import Axios from "axios";
 import marked from "marked";
@@ -14,6 +15,8 @@ moment.tz.setDefault("Asia/Tokyo");
 Vue.prototype.$http = Axios;
 
 Vue.prototype.$moment = moment;
+
+Vue.prototype.$c0re = c0re;
 
 Vue.prototype.$marked = marked;
 Vue.prototype.$lodash = lodash;
