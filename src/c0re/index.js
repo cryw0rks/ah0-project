@@ -1,7 +1,9 @@
 import * as user from './user';
+import * as content from './content';
 
 var functionList = {
-    user
+    user,
+    content
 };
 
 export function getFunction(functionName) {
