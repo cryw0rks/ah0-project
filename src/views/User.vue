@@ -31,8 +31,8 @@
         </div>
       </router-link>
     </div>
-  </div> </template
->s
+  </div>
+</template>
 
 <script>
 export default {
@@ -42,37 +42,9 @@ export default {
       users: {}
     };
   },
-  methods: {
-    show(type, config) {
-      //this.showModal = false
-      if (type == "loading") {
-        // this.modalTitle = "loading"
-        //this.modalContent = "please wait...."
-      } else if (type == "dialog") {
-        console.log(config);
-        //this.modalTitle = config.title
-        //this.modalContent = config.content
-        //this.buttons = config.buttons
-      }
-      // this.showModal = true
-    },
-    hide() {
-      // this.showModal = false
-    },
-    click(buttonIndex, event, source = "click") {
-      const button = this.buttons[buttonIndex];
-      if (button && typeof button.handler === "function") {
-        button.handler(buttonIndex, event, { source });
-        this.showModal = false;
-      } else {
-        this.showModal = false;
-      }
-    }
-  },
   async mounted() {
-    const dataUser = await this.$dataUser.getAllUsers();
-    //console.log(await this.$dataUser.getAllUsers())
-    this.users = dataUser["data"]["rows"];
+    const dataUser = await this.$c0re.getFunction('user').getAllUser(-1);
+    this.users = dataUser["result"]["rows"];
   }
 };
 </script>
