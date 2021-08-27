@@ -39,6 +39,11 @@ header ul, header li, footer ul, footer li, .content-right-menu, .content-right-
 	display: inline-block;
 }
 
+.content .content-left .home .hello > h1,
+.content .content-left .user > h1 {
+  margin-top: 0;
+}
+
 .content .content-left .content-title {
 	font-size: 18px;
 	font-weight: 700;
