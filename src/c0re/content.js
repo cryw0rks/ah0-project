@@ -30,7 +30,8 @@ export function getAllContentByUsername(username, limit, page) {
 
 export function getAllContentByUserID(userid, limit, page) {
 	return new Promise((resolve, reject) => {
-		Axios.get(urlAPI + "content", { params: { userid: userid, limit: limit, page: page } })
+		const auth = localStorage.getItem("auth");
+		Axios.get(urlAPI + "content", { params: { userid: userid, limit: limit, page: page, auth: auth } })
 			.then(response => {
 				resolve(response.data);
 				reject("fail");
