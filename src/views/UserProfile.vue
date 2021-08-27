@@ -41,7 +41,11 @@ export default {
   
   computed: {
     compiledMarkdown: function () {
-      return this.$marked(this.about, { sanitize: true });
+      if (this.about != null) {
+        return this.$marked(this.about);
+      } else {
+        return null
+      }
     },
   },
 
