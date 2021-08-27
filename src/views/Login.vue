@@ -7,7 +7,7 @@
         <td>:</td>
         <td>
           <input
-            style="width: 200px;"
+            style="width: 200px"
             required
             id="username"
             v-model="username"
@@ -21,7 +21,7 @@
         <td>:</td>
         <td>
           <input
-            style="width: 200px;"
+            style="width: 200px"
             required
             id="password"
             v-model="password"
@@ -34,7 +34,7 @@
         <td colspan="3">
           don't have acc?
           <router-link to="/register">register now</router-link>
-          <button style="float: right;" type="submit" @click="handleSubmit">
+          <button style="float: right" type="submit" @click="handleSubmit">
             login
           </button>
         </td>
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
     };
   },
 
@@ -61,18 +61,19 @@ export default {
     handleSubmit(e) {
       e.preventDefault();
       this.$refs.modalok.show("loading");
-      this.$auth
+      this.$c0re
+        .getFunction("auth")
         .login(this.username, this.password)
-        .then(response => {
-          if (response.error) {
+        .then((response) => {
+          if (response.success == false) {
             this.$refs.modalok.show("dialog", {
               title: "info",
               content: response.message,
               buttons: [
                 {
-                  title: "close"
-                }
-              ]
+                  title: "close",
+                },
+              ],
             });
           } else {
             this.$refs.modalok.show("dialog", {
@@ -83,16 +84,16 @@ export default {
                   title: "close",
                   handler: () => {
                     this.$router.go("/");
-                  }
-                }
-              ]
+                  },
+                },
+              ],
             });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.error(error.response);
         });
-    }
-  }
+    },
+  },
 };
 </script>
