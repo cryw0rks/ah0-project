@@ -24,10 +24,13 @@
         <router-link to="/register">register</router-link>
       </li>
     </ul>
+
+    <Modal ref="modalok"></Modal>
   </div>
 </template>
 
 <script>
+import Modal from "../modal";
 export default {
   data() {
     return {
@@ -41,6 +44,8 @@ export default {
     }
   },
 
+  components: { Modal },
+
   methods: {
     renderData(dataUser) {
       this.user_nickname = dataUser["nickname"];
@@ -53,10 +58,11 @@ export default {
     handleLogout(e) {
       e.preventDefault();
       this.$refs.modalok.show("loading");
-      this.$auth
+      this.$c0re
+        .getFunction('auth')
         .logout()
         .then(response => {
-          if (response.error) {
+          if (response.success == false) {
             this.$refs.modalok.show("dialog", {
               title: "info",
               content: response.message,
