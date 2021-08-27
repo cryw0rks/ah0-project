@@ -55,6 +55,31 @@ export function register(username, email, password, password_retype) {
     });
 }
 
+export function logout() {
+    return new Promise((resolve, reject) => {
+        var auth_code = localStorage.getItem("auth");
+        const formData = new FormData();
+        formData.append('auth', auth_code);
+
+        axios({
+            url: `${urlAPI}auth/logout`,
+            method: 'POST',
+            data: formData,
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'multipart/form-data',
+            },
+        }).then(response => {
+            localStorage.removeItem("auth");
+            resolve(response.data);
+            reject("fail");
+        })
+        .catch(function (error) {
+            console.error(error.response);
+        });
+    });
+}
+
 export function isLogin(with_data = false) {
     return new Promise((resolve, reject) => {
         var auth_code = localStorage.getItem("auth");
