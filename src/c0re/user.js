@@ -4,7 +4,7 @@ var urlAPI = config.getApiUrl();
 
 export function getAllUser(limit, page) {
 	return new Promise((resolve, reject) => {
-		Axios.get(urlAPI + "user", { params: { limit: limit, page: page } })
+		Axios.get(`${urlAPI}user`, { params: { limit: limit, page: page } })
 			.then(response => {
 				resolve(response.data);
 				reject("fail");
@@ -17,7 +17,7 @@ export function getAllUser(limit, page) {
 
 export function getOneUserByUsername(username) {
 	return new Promise((resolve, reject) => {
-		Axios.get(urlAPI + "user", { params: { username: username } })
+		Axios.get(`${urlAPI}user`, { params: { username: username } })
 			.then(response => {
 				resolve(response.data);
 				reject("fail");
