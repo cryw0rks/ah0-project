@@ -90,10 +90,11 @@ export default {
     handleSubmit(e) {
       e.preventDefault();
       this.$refs.modalok.show("loading");
-      this.$auth
+      this.$c0re
+        .getFunction("auth")
         .register(this.username, this.email, this.password, this.password2)
         .then(response => {
-          if (response.error) {
+          if (response.success == false) {
             this.$refs.modalok.show("dialog", {
               title: "info",
               content: response.message,

@@ -1,8 +1,8 @@
 <template>
   <div class="user">
-    <h2>official discord ba-ka dead boring lol</h2>
+    <h2>discord club</h2>
     <p>feel free to join!</p>
-    <h3>official ba-ka [closed]</h3>
+    <h3>ba-ka</h3>
     <iframe
       src="https://discordapp.com/widget?id=446644631044882443&theme=dark"
       width="100%"
@@ -10,15 +10,6 @@
       allowtransparency="true"
       frameborder="0"
     ></iframe>
-    <br><br>
-    <h3>weeaboos squad [feel free to join]</h3>
-    <iframe
-      src="https://discordapp.com/widget?id=455999028010680321&theme=dark"
-      width="100%"
-      height="500"
-      allowtransparency="true"
-      frameborder="0"
-    ></iframe>
-    <p>join <a href="https://discord.gg/EsqRxP2">weeaboos squad</a></p>
+    <p>join <a href="https://d.ba-ka.org/">ba-ka</a></p>
   </div>
 </template>

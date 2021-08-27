@@ -24,10 +24,13 @@
         <router-link to="/register">register</router-link>
       </li>
     </ul>
+
+    <Modal ref="modalok"></Modal>
   </div>
 </template>
 
 <script>
+import Modal from "../modal";
 export default {
   data() {
     return {
@@ -41,23 +44,25 @@ export default {
     }
   },
 
+  components: { Modal },
+
   methods: {
-    renderData(lol) {
-      //console.log(lol);
-      this.user_nickname = lol["data_auth"]["data_user"]["nickname"];
-      this.user_username = lol["data_auth"]["data_user"]["username"];
-      this.user_email = lol["data_auth"]["data_user"]["email"];
-      this.user_about = lol["data_auth"]["data_user"]["about"];
-      this.user_image_profile = lol["data_auth"]["data_user"]["image_profile"];
-      this.user_image_banner = lol["data_auth"]["data_user"]["image_banner"];
+    renderData(dataUser) {
+      this.user_nickname = dataUser["nickname"];
+      this.user_username = dataUser["username"];
+      this.user_email = dataUser["email"];
+      this.user_about = dataUser["about"];
+      this.user_image_profile = dataUser["image_profile"];
+      this.user_image_banner = dataUser["image_banner"];
     },
     handleLogout(e) {
       e.preventDefault();
       this.$refs.modalok.show("loading");
-      this.$auth
+      this.$c0re
+        .getFunction('auth')
         .logout()
         .then(response => {
-          if (response.error) {
+          if (response.success == false) {
             this.$refs.modalok.show("dialog", {
               title: "info",
               content: response.message,
@@ -88,11 +93,12 @@ export default {
       }
   },
   async beforeMount() {
-    const lolz = await this.$auth.isLogin();
-    this.isLogin = lolz["isLogin"];
-    if (this.isLogin) {
-      const data_userx = await this.$auth.getInfoAuth(this.$auth.getAuthText());
-      this.renderData(data_userx);
+    var data_auth = await this.$c0re.getFunction("auth").isLogin(true);
+    if (data_auth != false) {
+      if (data_auth['result']['expired'] == false) {
+        this.isLogin = true;
+        this.renderData(data_auth['result']['user']);
+      }
     }
   }
 }

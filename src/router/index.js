@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import * as auth from "../auth";
+import * as c0re from "../c0re";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 
@@ -152,9 +152,8 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const lol = await auth.isLogin();
-  //console.log('log', lol)
-  if (lol["isLogin"]) {
+  const isLogin = await c0re.getFunction("auth").isLogin();
+  if (isLogin) {
     if (to.meta.hideOnLogin) {
       return next("/");
     }

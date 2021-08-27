@@ -4,16 +4,26 @@
     <div class="center-cropped"><img v-bind:src="this.image_profile" /></div>
     <h4>@{{ this.username }}</h4>
     <div v-html="compiledMarkdown"></div>
-    <h4>kami</h4>
-    <div class="kami-list" v-if="users">
+    <div class="kami-list" v-if="users.length > 0">
+      <h4>kami</h4>
       <router-link
-        v-for="(yox, index) in users" class="kami-one" :key="index" :to="{ path: 'content', name: 'Content Show', params: { codeURL: yox.contentcode_url } }" @click.stop="click(index, $event)">
-        <h1>{{ yox.contenttitle }}</h1>
-        <p>by {{ yox.usernickname }}</p>
-        <p>{{ yox.contentdescription }}</p>
+        v-for="(value, index) in users"
+        class="kami-one"
+        :key="index"
+        :to="{
+          path: 'content',
+          name: 'Content Show',
+          params: { codeURL: value.content.code },
+        }"
+        @click.stop="click(index, $event)"
+      >
+        <h1>{{ value.content.title }}</h1>
+        <p>by {{ value.user.nickname }}</p>
+        <p>{{ value.content.description }}</p>
       </router-link>
     </div>
-  </div> </template>
+  </div>
+</template>
 
 <script>
 export default {
@@ -25,53 +35,30 @@ export default {
       about: null,
       image_profile: null,
       image_banner: null,
-      users: {}
+      users: {},
     };
   },
+  
   computed: {
-        compiledMarkdown: function() {
-            return this.$marked(this.about, { sanitize: true });
-          }
-    },
-  methods: {
-    show(type, config) {
-      //this.showModal = false
-      if (type == "loading") {
-        // this.modalTitle = "loading"
-        //this.modalContent = "please wait...."
-      } else if (type == "dialog") {
-        console.log(config);
-        //this.modalTitle = config.title
-        //this.modalContent = config.content
-        //this.buttons = config.buttons
-      }
-      // this.showModal = true
-    },
-    hide() {
-      // this.showModal = false
-    },
-    click(buttonIndex, event, source = "click") {
-      const button = this.buttons[buttonIndex];
-      if (button && typeof button.handler === "function") {
-        button.handler(buttonIndex, event, { source });
-        this.showModal = false;
+    compiledMarkdown: function () {
+      if (this.about != null) {
+        return this.$marked(this.about);
       } else {
-        this.showModal = false;
+        return null
       }
-    }
+    },
   },
+
   async mounted() {
-    const dataUser = await this.$dataUser.getOneUser(this.$route.params.userId);
-    this.username = dataUser["data"]["username"];
-    this.nickname = dataUser["data"]["nickname"];
-    this.about = dataUser["data"]["about"];
-    this.image_profile = dataUser["data"]["image_profile"];
-    this.image_banner = dataUser["data"]["image_banner"];
-    if (dataUser) {
-    const dataUserz = await this.$dataContent.getAllContents(dataUser["data"]["id"]);
-    //console.log(await this.$dataUser.getAllUsers())
-    this.users = dataUserz["data"]["rows"];
-    }
-  }
+    const res = await this.$c0re.getFunction('user').getOneUserByUsername(this.$route.params.userId);
+    this.username = res["result"]["username"];
+    this.nickname = res["result"]["nickname"];
+    this.about = res["result"]["about"];
+    this.image_profile = res["result"]["image_profile"];
+    this.image_banner = res["result"]["image_banner"];
+    
+	  const resKami = await this.$c0re.getFunction('content').getAllContentByUserID(res["result"]["id"], -1);
+    this.users = resKami["result"]["rows"];
+  },
 };
 </script>

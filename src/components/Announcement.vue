@@ -34,26 +34,18 @@ export default {
     msg: String
   },
   methods: {
-    renderData(lol) {
-      //console.log(lol);
-      this.user_nickname = lol["data_auth"]["data_user"]["nickname"];
-    },
-    async lmao() {
-      //console.log(this.isLogin);
-      if (this.isLogin) {
-        const data_userx = await this.$auth.getInfoAuth(
-          this.$auth.getAuthText()
-        );
-        this.renderData(data_userx);
-        //console.log(data_userx);
-      }
+    renderData(dataUser) {
+      this.user_nickname = dataUser["nickname"];
     }
   },
   async beforeMount() {
-    const lolz = await this.$auth.isLogin();
-    this.isLogin = lolz["isLogin"];
-    //console.log(lolz)
-    this.lmao();
+    var data_auth = await this.$c0re.getFunction("auth").isLogin(true);
+    if (data_auth != false) {
+      if (data_auth['result']['expired'] == false) {
+        this.isLogin = true;
+        this.renderData(data_auth['result']['user']);
+      }
+    }
   }
 };
 </script>
