@@ -94,23 +94,23 @@ export default {
     msg: String
   },
   methods: {
-    renderData(lol) {
-      //console.log(lol);
-      this.user_nickname = lol["data_auth"]["data_user"]["nickname"];
-      this.user_username = lol["data_auth"]["data_user"]["username"];
-      this.user_email = lol["data_auth"]["data_user"]["email"];
-      this.user_about = lol["data_auth"]["data_user"]["about"];
-      this.user_image_profile = lol["data_auth"]["data_user"]["image_profile"];
-      this.user_image_banner = lol["data_auth"]["data_user"]["image_banner"];
+    renderData(dataUser) {
+      this.user_nickname = dataUser["nickname"];
+      this.user_username = dataUser["username"];
+      this.user_email = dataUser["email"];
+      this.user_about = dataUser["about"];
+      this.user_image_profile = dataUser["image_profile"];
+      this.user_image_banner = dataUser["image_banner"];
     },
     handleSubmit(e) {
       e.preventDefault();
       this.$refs.modalok.show("loading");
-      this.$auth
+      this.$c0re
+        .getFunction('account')
         .updateInfo(
           this.user_username,
-          this.user_nickname,
           this.user_email,
+          this.user_nickname,
           this.user_about
         )
         .then(response => {
@@ -131,7 +131,8 @@ export default {
     handleSubmitPW(e) {
       e.preventDefault();
       this.$refs.modalok.show("loading");
-      this.$auth
+      this.$c0re
+        .getFunction('account')
         .updatePassword(
           this.password_ori,
           this.password_new,
@@ -163,8 +164,9 @@ export default {
     async handleSubmitImageProfile(e) {
       e.preventDefault();
       this.$refs.modalok.show("loading");
-      this.$auth
-        .updateImageProfile(this.image_profile_file)
+      this.$c0re
+        .getFunction('account')
+        .updateAvatar(this.image_profile_file)
         .then(response => {
           this.$refs.modalok.show("dialog", {
             title: "info",
@@ -175,8 +177,8 @@ export default {
               }
             ]
           });
-          if (response.error == false) {
-            this.user_image_profile = response.data_image["url"];
+          if (response.success == true) {
+            this.user_image_profile = response['result']['image_url'];
             this.$refs.image_profile_file.value = null;
           }
         })
@@ -196,8 +198,13 @@ export default {
     }
   },
   async mounted() {
-    const data_userx = await this.$auth.getInfoAuth(this.$auth.getAuthText());
-    this.renderData(data_userx);
+    var data_auth = await this.$c0re.getFunction("auth").isLogin(true);
+    if (data_auth != false) {
+      if (data_auth['result']['expired'] == false) {
+        this.isLogin = true;
+        this.renderData(data_auth['result']['user']);
+      }
+    }
   }
 };
 </script>
