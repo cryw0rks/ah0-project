@@ -194,10 +194,11 @@ export default {
   	handleSubmit(e) {
       e.preventDefault();
       this.$refs.modalok.show("loading");
-      this.$auth
-        .updatekami(this.titlezz, this.descriptionzz, this.status, this.contentya, this.$route.params.codeURL)
+      this.$c0re
+        .getFunction('content')
+        .updateKami(this.titlezz, this.descriptionzz, this.status, this.contentya, this.$route.params.codeURL)
         .then(response => {
-          if (response.error) {
+          if (response.success == false) {
             this.$refs.modalok.show("dialog", {
               title: "info",
               content: response.message,
@@ -225,16 +226,9 @@ export default {
     }
   },
   async mounted() {
-    const dataAll = await this.$dataContent.getOneContent(this.$route.params.codeURL);
-    //var dataUser = dataAll["author"]
-    var dataDetail = dataAll["detail"]
-    var dataContent = dataAll["content"]
-    //this.userName = dataUser["username"];
-    //this.userNickname = dataUser["nickname"];
-    //this.userAbout = dataUser["about"];
-    //this.userImage_profile = dataUser["image_profile"];
-    //this.userImage_banner = dataUser["image_banner"];
-    this.contentya = dataDetail["content"]
+    const res = await this.$c0re.getFunction('content').getOneContent(this.$route.params.codeURL);
+    var dataContent = res['result']['content']
+    this.contentya = dataContent["main"]
     this.descriptionzz = dataContent["description"]
     this.titlezz = dataContent["title"]
     if (dataContent["status"] == "profile") {
