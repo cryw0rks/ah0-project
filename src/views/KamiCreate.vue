@@ -86,7 +86,11 @@ export default {
   components: { Modal },
   computed: {
     compiledMarkdown: function () {
-      return this.$marked(this.contentya, { sanitize: true });
+	  if (this.contentya != null) {
+        return this.$marked(this.contentya);
+      } else {
+        return null
+      }
     },
     validData: function () {
       return this.title && this.description && this.status && this.contentya;
