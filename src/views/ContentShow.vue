@@ -24,7 +24,11 @@ export default {
 	},
 	computed: {
 		compiledMarkdown: function() {
-			return this.$marked(this.c_main);
+			if (this.c_main != null) {
+				return this.$marked(this.c_main);
+			} else {
+				return null
+			}
 		}
 	},
 	async beforeCreate() {
