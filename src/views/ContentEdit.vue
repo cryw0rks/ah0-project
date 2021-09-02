@@ -29,7 +29,7 @@
         	<select id="status" v-model="status">
         		<option name="private">private</option>
         		<option name="unlist">unlist</option>
-        		<option name="profile">only on profile</option>
+        		<option name="profile">profile</option>
         		<option name="public">public</option>
         	</select>
         </td>
